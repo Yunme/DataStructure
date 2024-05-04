@@ -7,7 +7,7 @@
 /**
  * 简单选择排序
  */
-void Sort_SelectionSimple(SqList &list) {
+void Sort_SelectionSimple(SortSqList &list) {
     for (int i = 0; i < list.length; ++i) {
         int minPos = i;
         for (int j = i + 1; j < list.length; ++j) {
@@ -30,7 +30,7 @@ void Sort_SelectionSimple(SqList &list) {
  * 调整堆，将线性表中 start-length 中的元素
  * 大根堆
  */
-void Sort_HeapAdjust(SqList &list, int start, int length) {
+void Sort_HeapAdjust(SortSqList &list, int start, int length) {
     ElementType data = list.r[start];
     for (int i = 2 * start + 1; i < length; i = 2 * i + 1) {
         if (i < length - 1 && list.r[i].key < list.r[i + 1].key)
@@ -43,7 +43,7 @@ void Sort_HeapAdjust(SqList &list, int start, int length) {
     list.r[start] = data;
 }
 
-void Sort_SelectionHeap(SqList &list) {
+void Sort_SelectionHeap(SortSqList &list) {
     // 创建大根堆 从最后一个非叶子结点向前调整成堆
     for (int i = list.length / 2 - 1; i >= 0; --i) {
         Sort_HeapAdjust(list, i, list.length);
@@ -60,11 +60,11 @@ void Sort_SelectionHeap(SqList &list) {
 /**
  * 归并排序
  */
-void Sort_Merge(SqList &list, int low, int mid, int high) {
+void Sort_Merge(SortSqList &list, int low, int mid, int high) {
     int n1 = mid - low + 1;
     int n2 = high - mid;
     //创建临时数组来存储左右两部分的元素
-    SqList sqList1, sqList2;
+    SortSqList sqList1, sqList2;
     sqList1.length = n1;
     sqList2.length = n2;
     for (int i = 0; i < n1; ++i) {
@@ -95,7 +95,7 @@ void Sort_Merge(SqList &list, int low, int mid, int high) {
     }
 }
 
-void Sort_MergeSort(SqList &list, int low, int high) {
+void Sort_MergeSort(SortSqList &list, int low, int high) {
     if (low < high) {
         int mid = (low + high) / 2;
         Sort_MergeSort(list, low, mid);

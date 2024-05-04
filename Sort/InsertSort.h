@@ -7,12 +7,12 @@
 
 #include "Sort.h"
 
-void Sort_InsertStraight(SqList &list);
+void Sort_InsertStraight(SortSqList &list);
 
-void Sort_InsertStraightBackward(SqList &list);
+void Sort_InsertStraightBackward(SortSqList &list);
 
-void Sort_InsertBinary(SqList &list);
+void Sort_InsertBinary(SortSqList &list);
 
-void Sort_InsertShell(SqList &list);
+void Sort_InsertShell(SortSqList &list);
 
 #endif //ANDROIDFRAMEWORKTEST_INSERTSORT_H

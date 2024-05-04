@@ -6,7 +6,7 @@
 #include <cstring>
 #include "testSort.h"
 
-static SqList fixedData() {
+static SortSqList fixedData() {
 //    const int count = 20;
     int count;
 //    int array[count] = {81, 68, 32, 1, 4, 25, 94, 64, 30, 71, 85,
@@ -21,7 +21,7 @@ static SqList fixedData() {
     int array[] = {101, 402, 303, 266, 202};
 
     count = size(array);
-    SqList list;
+    SortSqList list;
     list.length = count;
     for (int i = 0; i < count; ++i) {
         list.r[i].key = array[i];
@@ -30,7 +30,7 @@ static SqList fixedData() {
 }
 
 void testInsertSort() {
-    SqList data = fixedData();
+    SortSqList data = fixedData();
     SortPrint(data);
     printf("====直接插入排序，从后向前找：\n");
     Sort_InsertStraight(data);
@@ -46,7 +46,7 @@ void testInsertSort() {
 }
 
 void testSwapSort() {
-    SqList data = fixedData();
+    SortSqList data = fixedData();
     SortPrint(data);
     printf("====冒泡排序：\n");
     Sort_SwapBubble(data);
@@ -58,7 +58,7 @@ void testSwapSort() {
 }
 
 void testSelectionSort() {
-    SqList data = fixedData();
+    SortSqList data = fixedData();
     SortPrint(data);
     printf("====简单选择排序：\n");
     Sort_SelectionSimple(data);

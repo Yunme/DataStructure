@@ -10,8 +10,8 @@
 typedef struct {
     ElementType r[MAXSIZE];
     int length;
-} SqList;
+} SortSqList;
 
-void SortPrint(const SqList &list);
+void SortPrint(const SortSqList &list);
 
 #endif //ANDROIDFRAMEWORKTEST_SORT_H

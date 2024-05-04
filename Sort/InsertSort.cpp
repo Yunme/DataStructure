@@ -8,7 +8,7 @@
  * 直接插入排序
  * 从后向前查找 + 移动
  */
-void Sort_InsertStraight(SqList &list) {
+void Sort_InsertStraight(SortSqList &list) {
     if (list.length <= 1) return;
     int totalCompare = 0;
     for (int i = 1; i < list.length; ++i) {
@@ -35,7 +35,7 @@ void Sort_InsertStraight(SqList &list) {
  * 从前向后查找
  * 移动
  */
-void Sort_InsertStraightBackward(SqList &list) {
+void Sort_InsertStraightBackward(SortSqList &list) {
     if (list.length <= 1) return;
     int totalCompare = 0;
     for (int i = 1; i < list.length; ++i) {
@@ -65,7 +65,7 @@ void Sort_InsertStraightBackward(SqList &list) {
 /**
  * 二分插入排序
  */
-void Sort_InsertBinary(SqList &list) {
+void Sort_InsertBinary(SortSqList &list) {
     if (list.length <= 1) return;
     int totalCompare = 0;
     for (int i = 1; i < list.length; ++i) {
@@ -91,7 +91,7 @@ void Sort_InsertBinary(SqList &list) {
     printf("总共比较%d次\n", totalCompare);
 }
 
-void Sort_InsertShell(SqList &list) {
+void Sort_InsertShell(SortSqList &list) {
     int maxK = 0;
     // Hibbard 序列 2^k - 1
     while ((1 << maxK) - 1 < list.length) {

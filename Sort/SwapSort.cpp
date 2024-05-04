@@ -7,7 +7,7 @@
 /**
  * 交换：冒泡排序
  */
-void Sort_SwapBubble(SqList &list) {
+void Sort_SwapBubble(SortSqList &list) {
     int totalCompare = 0;
     for (int i = 0; i < list.length - 1; ++i) {
         bool swapped = false;
@@ -30,7 +30,7 @@ void Sort_SwapBubble(SqList &list) {
 /**
  * 交换：快速排序 分组
  */
-int Sort_SwapQuickPartition(SqList &list, int low, int high) {
+int Sort_SwapQuickPartition(SortSqList &list, int low, int high) {
     ElementType data = list.r[low];
     KeyType pivotKey = list.r[low].key;
     while (low < high) {
@@ -49,7 +49,7 @@ int Sort_SwapQuickPartition(SqList &list, int low, int high) {
 /**
  * 交换：快速排序
  */
-void Sort_SwapQuick(SqList &list, int low, int high) {
+void Sort_SwapQuick(SortSqList &list, int low, int high) {
     if (low < high) {
         int pivotPos = Sort_SwapQuickPartition(list, low, high);
 

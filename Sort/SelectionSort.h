@@ -7,10 +7,10 @@
 
 #include "Sort.h"
 
-void Sort_SelectionSimple(SqList &list);
+void Sort_SelectionSimple(SortSqList &list);
 
-void Sort_SelectionHeap(SqList &list);
+void Sort_SelectionHeap(SortSqList &list);
 
-void Sort_MergeSort(SqList &list, int low, int high);
+void Sort_MergeSort(SortSqList &list, int low, int high);
 
 #endif //ANDROIDFRAMEWORKTEST_SELECTIONSORT_H

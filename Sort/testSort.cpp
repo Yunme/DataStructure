@@ -81,12 +81,19 @@ void Sort(SLList L, int adr[]) {
         adr[i++] = p;
         p = L.r[p].next;
     }
+    for (int j = 0; j < L.recordNum; ++j) {
+        cout << adr[j] << " ";
+        for (int k = L.keyNum - 1; k >= 0; k--)
+            cout << L.r[adr[j]].keys[k];
+        cout << endl;
+    }
+    printf("\n");
 }
 
 void Rearrange(SLList &L, int adr[]) {
     //adr给出静态链表L的有序次序，即L.r[adr[i]]是第i小的记录。
     //本算法按adr重排L.r，使其有序。算法10.18(L的类型有变)
-    int i, j, k;
+    int i = 1, j, k;
     if (adr[i] != i) {
         j = i;
         L.r[0] = L.r[i]; //暂存记录(*L).r[i]
@@ -105,12 +112,13 @@ void Rearrange(SLList &L, int adr[]) {
 void testRadixSort() {
     SLList l;
     int *adr;
-    int max = -1;
-    int count = 5;
-//    vector<ElementType> data = getDataArrayForSort(count, max);
-    SqList sqList = fixedData();
-    vector<ElementType> data(sqList.r, sqList.r + sqList.length);
+    int count = 20;
+    int maxNum = 10000;
+    vector<ElementType> data = getDataArrayForSort(count, maxNum);
+//    SqList sqList = fixedData();
+//    vector<ElementType> data(sqList.r, sqList.r + sqList.length);
 
+    int max = -1;
     for (ElementType &e: data) {
         if (e.key > max)
             max = e.key;
@@ -132,19 +140,23 @@ void testRadixSort() {
             l.r[i].keys[j] = c[l.keyNum - 1 - j];
     }
 //    RadixSort(l);
-//    RadixPrint(l);
-//
 //    adr = new int[l.recordNum];
 //    Sort(l, adr);
 //    Rearrange(l, adr);
 //    cout << "排序后(重排记录):\n";
-////    print(l);
 //    RadixPrint(l);
-
-    radixSort(data);
+    printf("基数排序，分发收集法：\n");
+    RadixSort_SimpleDistributeCollect(data);
     for (ElementType &e: data) {
         printf("%d ", e.key);
     }
+    printf("\n");
+    printf("基数排序，计数排序法：\n");
+    RadixSort_Count(data);
+    for (ElementType &e: data) {
+        printf("%d ", e.key);
+    }
+    printf("\n");
 }
 
 

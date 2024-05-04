@@ -12,16 +12,16 @@ int ord(char c) {
     return c - '0';
 }
 
-void Sort_RadixDistribute(SLCell *cell, int i, ArrType &f, ArrType &e) {
+void Sort_RadixDistribute(SLCell *r, int i, ArrType &f, ArrType &e) {
     for (int j = 0; j < RADIX; ++j) {
         f[j] = 0;
     }
-    for (int p = cell[0].next; p; p = cell[p].next) {
-        int j = ord(cell[p].keys[i]);
+    for (int p = r[0].next; p; p = r[p].next) {
+        int j = ord(r[p].keys[i]);
         if (!f[j])
             f[j] = p;
         else
-            cell[e[j]].next = p;
+            r[e[j]].next = p;
         e[j] = p;
     }
 }
@@ -70,7 +70,47 @@ void RadixPrint(const SLList &L) {
     }
 }
 
-// 使用计数排序对数组按照指定的位数进行排序
+/**
+ * 基数排序 使用分发收集法
+ */
+void RadixSort_SimpleDistribute(const vector<ElementType> &arr, vector<vector<ElementType>> &temp, int exp) {
+    for (const auto &i: arr) {
+        int digitNum = (i.key / exp) % 10;
+        temp[digitNum].push_back(i);
+    }
+}
+
+void RadixSort_SimpleCollect(vector<ElementType> &arr, vector<vector<ElementType>> &temp) {
+    int k = 0;
+    for (int i = 0; i < temp.size(); ++i) {
+        for (int j = 0; j < temp[i].size(); ++j) {
+            arr[k++] = temp[i][j];
+        }
+    }
+    // 清空temp
+    temp.clear();
+    temp.resize(10);
+}
+
+void RadixSort_SimpleDistributeCollect(vector<ElementType> &arr) {
+    int max = arr[0].key;
+    for (int i = 1; i < arr.size(); i++) {
+        if (arr[i].key > max)
+            max = arr[i].key;
+    }
+
+    // 从最低位到最高位，依次进行分发收集
+    vector<vector<ElementType>> temp(10);
+    for (int exp = 1; max / exp > 0; exp *= 10) {
+        RadixSort_SimpleDistribute(arr, temp, exp);
+        RadixSort_SimpleCollect(arr, temp);
+    }
+}
+
+/**
+ * 基数排序 使用计数排序法
+ * 对数组按照指定的位数进行排序
+ */
 void countSort(vector<ElementType> &arr, int exp) {
     int n = arr.size();
     vector<int> output(n, 0);
@@ -78,7 +118,8 @@ void countSort(vector<ElementType> &arr, int exp) {
 
     // 统计每个数字出现的次数
     for (int i = 0; i < n; i++) {
-        count[(arr[i].key / exp) % 10]++;
+        int digitNumber = (arr[i].key / exp) % 10;
+        count[digitNumber]++;
     }
 
     // 计算每个数字在输出数组中的位置
@@ -88,8 +129,9 @@ void countSort(vector<ElementType> &arr, int exp) {
 
     // 根据计数数组将数字放入输出数组中
     for (int i = n - 1; i >= 0; i--) {
-        output[count[(arr[i].key / exp) % 10] - 1] = arr[i].key;
-        count[(arr[i].key / exp) % 10]--;
+        int digitNumber = (arr[i].key / exp) % 10;
+        output[count[digitNumber] - 1] = arr[i].key;
+        count[digitNumber]--;
     }
 
     // 将排序好的数字复制回原数组
@@ -98,8 +140,7 @@ void countSort(vector<ElementType> &arr, int exp) {
     }
 }
 
-// 使用基数排序对数组进行排序
-void radixSort(vector<ElementType> &arr) {
+void RadixSort_Count(vector<ElementType> &arr) {
     int max = arr[0].key;
     for (int i = 1; i < arr.size(); i++) {
         if (arr[i].key > max)

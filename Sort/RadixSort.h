@@ -10,9 +10,9 @@
 #define MAXNUM_KEY 8
 #define RADIX 10
 #define MAX_SPACE 10000
-
+typedef char KeysType;
 typedef struct {
-    KeyType keys[MAXNUM_KEY];
+    KeysType keys[MAXNUM_KEY];
     int next;
 } SLCell;
 
@@ -29,5 +29,9 @@ void RadixSort(SLList &L);
 void RadixPrint(const SLList &L);
 
 void radixSort(vector<ElementType> &arr);
+
+void RadixSort_SimpleDistributeCollect(vector<ElementType> &arr);
+
+void RadixSort_Count(vector<ElementType> &arr);
 
 #endif //ANDROIDFRAMEWORKTEST_RADIXSORT_H

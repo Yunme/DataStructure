@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.27)
-project(AndroidFrameworkTest)
+project(DataStructure)
 
 set(CMAKE_CXX_STANDARD 17)
 include_directories(/usr/include)
 
-add_executable(AndroidFrameworkTest main.cpp
+add_executable(DataStructure main.cpp
         LinearList/SqList.cpp
         LinearList/SqList.h
         LinearList/LinkList.cpp

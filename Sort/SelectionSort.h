@@ -13,4 +13,6 @@ void Sort_SelectionHeap(SortSqList &list);
 
 void Sort_MergeSort(SortSqList &list, int low, int high);
 
+void Sort_MergeSortLinkList(SortLinkList &list);
+
 #endif //ANDROIDFRAMEWORKTEST_SELECTIONSORT_H

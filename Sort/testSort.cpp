@@ -72,6 +72,12 @@ void testSelectionSort() {
     data = fixedData();
     Sort_MergeSort(data, 0, data.length - 1);
     SortPrint(data);
+
+    printf("====πÈ≤¢≈≈–Ú ¡¥±Ì∞Ê±æ£∫\n");
+    SortLinkList list = SortSq_Link(fixedData());
+    SortPrint(list);
+    Sort_MergeSortLinkList(list);
+    SortPrint(list);
 }
 
 void Sort(SLList L, int adr[]) {
@@ -163,6 +169,6 @@ void testRadixSort() {
 void testSort() {
 //    testInsertSort();
 //    testSwapSort();
-//    testSelectionSort();
-    testRadixSort();
+    testSelectionSort();
+//    testRadixSort();
 }

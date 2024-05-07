@@ -58,10 +58,13 @@ void Sort_SelectionHeap(SortSqList &list) {
 }
 
 /**
- * 归并排序
+ * 归并排序 数组顺序表版本
+ * 将两个或两个以上的有序子序列归并成一个有序序列
  */
 void Sort_Merge(SortSqList &list, int low, int mid, int high) {
+    // [low, mid] 左半部分 包含mid
     int n1 = mid - low + 1;
+    // (mid, high] 右半部分
     int n2 = high - mid;
     //创建临时数组来存储左右两部分的元素
     SortSqList sqList1, sqList2;
@@ -98,7 +101,9 @@ void Sort_Merge(SortSqList &list, int low, int mid, int high) {
 void Sort_MergeSort(SortSqList &list, int low, int high) {
     if (low < high) {
         int mid = (low + high) / 2;
+        // 前半部分
         Sort_MergeSort(list, low, mid);
+        // 后半部分
         Sort_MergeSort(list, mid + 1, high);
 
         Sort_Merge(list, low, mid, high);
@@ -106,5 +111,59 @@ void Sort_MergeSort(SortSqList &list, int low, int high) {
 }
 
 /**
-* 基数排序
-*/
+ * 归并排序 链表版本
+ * 时间 nlogN
+ * 空间 logN 递归栈
+ * 将两个或两个以上的有序子序列归并成一个有序序列
+ */
+SortNode *findMid(SortNode *head) {
+    if (head == nullptr || head->next == nullptr) return head;
+    SortNode *slow = head, *fast = head;
+    while (fast->next && fast->next->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    return slow;
+}
+
+SortNode *Sort_MergeLink(SortNode *low, SortNode *midNext) {
+    if (low == nullptr) return midNext;
+    if (midNext == nullptr) return low;
+    SortNode *p1 = low;
+    SortNode *p2 = midNext;
+    SortNode *dummyNode = new SortNode;
+    SortNode *p = dummyNode;
+    // 合并两个有序链表
+    while (p1 && p2) {
+        if (p1->val.key < p2->val.key) {
+            p->next = p1;
+            p1 = p1->next;
+        } else {
+            p->next = p2;
+            p2 = p2->next;
+        }
+        p = p->next;
+    }
+    p->next = p1 ? p1 : p2;
+    return dummyNode->next;
+}
+
+// 递归直到剩单个元素比较大小后， 归并（合并有序链表）
+void Sort_MergeSortLinkList(SortLinkList &list) {
+    if (list == nullptr || list->next == nullptr) return;
+    // 起始
+    SortNode *low = list;
+    // 中间
+    SortNode *mid = findMid(list);
+    SortNode *midNext = mid->next;
+    // 中间next 置空，从中断开。
+    mid->next = nullptr;
+
+    // 左部分
+    Sort_MergeSortLinkList(low);
+    // 右部分
+    Sort_MergeSortLinkList(midNext);
+
+    // 合并有序链表
+    list = Sort_MergeLink(low, midNext);
+}

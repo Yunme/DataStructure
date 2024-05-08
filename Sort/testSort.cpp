@@ -55,6 +55,11 @@ void testSwapSort() {
     data = fixedData();
     Sort_SwapQuick(data, 0, data.length - 1);
     SortPrint(data);
+    printf("====快速排序 三路快排：\n");
+    data = fixedData();
+    SortPrint(data);
+    Sort_SwapQuickThreeWay(data, 0, data.length - 1);
+    SortPrint(data);
 }
 
 void testSelectionSort() {
@@ -174,7 +179,7 @@ void testRadixSort() {
 
 void testSort() {
 //    testInsertSort();
-//    testSwapSort();
-    testSelectionSort();
+    testSwapSort();
+//    testSelectionSort();
 //    testRadixSort();
 }

@@ -145,7 +145,9 @@ SortNode *Sort_MergeLink(SortNode *low, SortNode *midNext) {
         p = p->next;
     }
     p->next = p1 ? p1 : p2;
-    return dummyNode->next;
+    SortNode *result = dummyNode->next;
+    delete dummyNode;
+    return result;
 }
 
 // 递归直到剩单个元素比较大小后， 归并（合并有序链表）
@@ -166,4 +168,58 @@ void Sort_MergeSortLinkList(SortLinkList &list) {
 
     // 合并有序链表
     list = Sort_MergeLink(low, midNext);
+}
+
+
+/**
+ * 归并排序 链表版本
+ * 时间 nlogN
+ * 空间 常数
+ * 将两个或两个以上的有序子序列归并成一个有序序列
+ */
+/**
+ * 从头开始的第 size 个后断开链表，并返回剩下的
+ */
+SortNode *Sort_subLinkList(SortLinkList list, int size) {
+    if (list == nullptr) return list;
+    for (int i = 1; i < size && list->next; ++i) {
+        list = list->next;
+    }
+    SortNode *remain = list->next;
+    list->next = nullptr;
+    return remain;
+}
+
+void Sort_MergeSortLinkListUseLoop(SortLinkList &list) {
+    // 长度
+    int len = 0;
+    SortNode *p = list;
+    while (p) {
+        p = p->next;
+        len++;
+    }
+    auto *dummy = new SortNode;
+    dummy->next = list;
+    for (int size = 1; size < len; size *= 2) {
+        SortNode *current = dummy->next;
+        SortNode *prev = dummy;
+        while (current) {
+            SortNode *leftHead = current;
+
+            // 从左开始的 size 个分割
+            SortNode *rightHead = Sort_subLinkList(leftHead, size);
+            // 从右开始的 size 个分割
+            // current 后移
+            current = Sort_subLinkList(rightHead, size);
+            // 合并后的与之前相连
+            SortNode *merged = Sort_MergeLink(leftHead, rightHead);
+            prev->next = merged;
+
+            // prev 指针后移到合并之后的末尾，开始下次循环
+            while (prev->next) {
+                prev = prev->next;
+            }
+        }
+    }
+    list = dummy->next;
 }

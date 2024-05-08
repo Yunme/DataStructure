@@ -78,6 +78,12 @@ void testSelectionSort() {
     SortPrint(list);
     Sort_MergeSortLinkList(list);
     SortPrint(list);
+
+    printf("====归并排序 链表 迭代版本：\n");
+    list = SortSq_Link(fixedData());
+    SortPrint(list);
+    Sort_MergeSortLinkListUseLoop(list);
+    SortPrint(list);
 }
 
 void Sort(SLList L, int adr[]) {

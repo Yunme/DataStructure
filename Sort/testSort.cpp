@@ -78,6 +78,11 @@ void testSelectionSort() {
     Sort_MergeSort(data, 0, data.length - 1);
     SortPrint(data);
 
+    printf("====归并排序 数组迭代版本：\n");
+    data = fixedData();
+    Sort_MergeSortIteration(data);
+    SortPrint(data);
+
     printf("====归并排序 链表版本：\n");
     SortLinkList list = SortSq_Link(fixedData());
     SortPrint(list);
@@ -179,7 +184,7 @@ void testRadixSort() {
 
 void testSort() {
 //    testInsertSort();
-    testSwapSort();
-//    testSelectionSort();
+//    testSwapSort();
+    testSelectionSort();
 //    testRadixSort();
 }

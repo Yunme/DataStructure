@@ -13,6 +13,8 @@ void Sort_SelectionHeap(SortSqList &list);
 
 void Sort_MergeSort(SortSqList &list, int low, int high);
 
+void Sort_MergeSortIteration(SortSqList &list);
+
 void Sort_MergeSortLinkList(SortLinkList &list);
 
 void Sort_MergeSortLinkListUseLoop(SortLinkList &list);

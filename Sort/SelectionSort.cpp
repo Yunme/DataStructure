@@ -111,6 +111,25 @@ void Sort_MergeSort(SortSqList &list, int low, int high) {
 }
 
 /**
+ * 归并排序数组迭代版本
+ * @param list
+ */
+void Sort_MergeSortIteration(SortSqList &list) {
+    // 从步长为 1 开始进行归并操作，步长逐渐加倍
+    for (int size = 1; size < list.length; size *= 2) {
+        for (int i = 0; i < list.length - size; i += 2 * size) {
+            // [low, mid] 左半部分 包含mid
+            int low = i;
+            int mid = low + size - 1;
+            // (mid, high] 右半部分
+            int high = min(low + 2 * size - 1, list.length - 1);
+            // 合并两个有序子数组
+            Sort_Merge(list, low, mid, high);
+        }
+    }
+}
+
+/**
  * 归并排序 链表版本
  * 时间 nlogN
  * 空间 logN 递归栈

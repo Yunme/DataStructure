@@ -86,9 +86,10 @@ void BiTree_Traversal_Stack(BiTree tree) {
             stack.push(t);
             t = t->lc;
         } else {
-            printf("%c", stack.top()->data);
+            BiNode* top = stack.top();
+            printf("%c", top->data);
             stack.pop();
-            t = stack.top()->rc;
+            t = top->rc;
         }
     }
     printf("\n");
@@ -240,6 +241,7 @@ void BiTree_InsertChild(BiTree &tree, ElemType search, int LR, ElemType e) {
     BiTree_FindNode(tree, search, p);
     if (!p) return;
     BiNode *node = new BiNode;
+    node->lc = node->rc = nullptr;
     node->data = e;
     if (LR) {
         node->lc = p->lc;

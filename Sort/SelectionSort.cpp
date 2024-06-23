@@ -27,33 +27,91 @@ void Sort_SelectionSimple(SortSqList &list) {
 
 /**
  * 堆排序
- * 调整堆，将线性表中 start-length 中的元素
- * 大根堆
+ * 调整堆，大根堆 迭代做法
+ * 将线性表中 start-length 中的元素调整成满足大根堆性质
  */
 void Sort_HeapAdjust(SortSqList &list, int start, int length) {
     ElementType data = list.r[start];
+    // 左孩子 2 * start + 1
     for (int i = 2 * start + 1; i < length; i = 2 * i + 1) {
-        if (i < length - 1 && list.r[i].key < list.r[i + 1].key)
+        // 找出左右孩子中的较大者
+        // 右孩子 = i + 1
+        if (i < length - 1 && list.r[i].key < list.r[i + 1].key)    // 如果左孩子小于右孩子
             i++;
-        if (list.r[i].key <= data.key)
+        // 那么右孩子较大
+        if (list.r[i].key <= data.key)  // 较大的孩子不大于父结点 则不需要调整 满足大根堆
             break;
+        // 较大的孩子变成父节点
         list.r[start] = list.r[i];
+        // 对 i 结点进行下一轮调整, 其值还是 data
         start = i;
     }
+    // 最后将 data 赋值给当前位置
     list.r[start] = data;
 }
 
+/**
+ * 调整 以 i 结点为跟结点的子堆，
+ * 递归法
+ * @param i 对 i 处的元素进行调整，并递归的调整它的孩子
+ */
+void Sort_HeapAdjust2(SortSqList &list, int i, int n) {
+    // 找出 左右孩子中 比根结点大的较大者，并与根结点交换
+    int bigger = i;
+    int lc = 2 * i + 1;
+    int rc = 2 * i + 2;
+    // 如果 左孩子较大
+    if (lc < n && list.r[bigger].key < list.r[lc].key) {
+        // 更新为左孩子
+        bigger = lc;
+    }
+    // 如果 右孩子较大
+    if (rc < n && list.r[bigger].key < list.r[rc].key) {
+        // 更新为右孩子
+        bigger = rc;
+    }
+    // 如果较大值 不是根结点，则需要调整
+    if (bigger != i) {
+        // 交换根结点与较大者
+        swap(list.r[bigger], list.r[i]);
+        // 递归调整交换后的子节点
+        Sort_HeapAdjust2(list, n, bigger);
+    }
+}
+
+/**
+ * 堆排序入口
+ * 堆：
+ * 下标 i 的左孩子：2 * i + 1, 右孩子：2 * i + 2;
+ * 下标 i 的父节点：(i - 1) / 2
+ * 1. 创建大根堆
+ *    从最后一个非叶子结点向前调整成堆
+ *    根据完全二叉树的定义：最后一个非叶子结点的 = 最后一个结点的父节点
+ *    最后一个结点 n - 1，(n - 1 - 1) / 2 = n / 2 - 1
+ * 2. 逐步与根结点交换排序
+ *    根据大根堆性质：根结点是整个堆里最大的。
+ *    将最后一个结点与根结点交换，最大的已经到了最后，
+ *    交换后调整整个堆，但是最后一个结点不再是堆的范围，
+ */
 void Sort_SelectionHeap(SortSqList &list) {
     // 创建大根堆 从最后一个非叶子结点向前调整成堆
+    // 叶子结点不需要调整，已经满足堆的性质
+    // 最后一个非叶子结点的索引是：n / 2 - 1
     for (int i = list.length / 2 - 1; i >= 0; --i) {
-        Sort_HeapAdjust(list, i, list.length);
+        Sort_HeapAdjust2(list, i, list.length);
     }
-    // 逐步将堆顶元素与堆最后一个元素交换，缩小范围 并调整堆
+    // 根据大根堆性质，根结点肯定是整个堆里最大的。
+    // 逐步将堆顶元素与堆最后一个元素交换，每交换一次，最大的值就到最后了。升序
     for (int i = list.length - 1; i > 0; --i) {
-        ElementType data = list.r[i];
-        list.r[i] = list.r[0];
-        list.r[0] = data;
-        Sort_HeapAdjust(list, 0, i);
+//        ElementType data = list.r[i];
+//        list.r[i] = list.r[0];
+//        list.r[0] = data;
+        swap(list.r[0], list.r[i]);
+        // 迭代调用
+//        Sort_HeapAdjust(list, 0, i);
+//
+        // 递归调用
+        Sort_HeapAdjust2(list, 0, i); // 个数在变小。后面的不需要再参与调整了
     }
 }
 

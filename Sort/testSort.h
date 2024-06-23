@@ -10,6 +10,7 @@
 #include "SwapSort.h"
 #include "SelectionSort.h"
 #include "RadixSort.h"
+#include "Heap.h"
 
 void testSort();
 

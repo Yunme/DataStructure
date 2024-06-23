@@ -9,7 +9,7 @@
 static SortSqList fixedData() {
 //    const int count = 20;
     int count;
-//    int array[count] = {81, 68, 32, 1, 4, 25, 94, 64, 30, 71, 85,
+//    int array[] = {81, 68, 32, 1, 4, 25, 94, 64, 30, 71, 85,
 //                        24, 70, 62, 28, 54, 31, 43, 53, 20};
 //    int array[] = {60, 70, 80, 90, 100};
 //    int array[count] = {70, 60, 65, 90, 100};
@@ -18,13 +18,19 @@ static SortSqList fixedData() {
 //                   119,
 //                   671, 902, 838, 444, 359, 211, 484, 327, 898, 292, 4, 84, 366, 940, 627, 123, 851, 274, 736, 523, 541,
 //                   913, 905, 191, 137, 791, 197, 583, 498};
-    int array[] = {101, 402, 303, 266, 202};
+//    int array[] = {202, 402, 303, 266, 101};
+//    int array[] = {3, 2, 2, 2, 2, 2, 2, 2, 2, 1, 4};
+    int array[] = {5, 4, 2, 6, 3};
 
     count = size(array);
+//    count = 0;
     SortSqList list;
     list.length = count;
     for (int i = 0; i < count; ++i) {
-        list.r[i].key = array[i];
+        int data = array[i];
+//        if (i == 0) data = 3;
+//        else data = 2;
+        list.r[i].key = data;
     }
     return list;
 }
@@ -52,6 +58,11 @@ void testSwapSort() {
     Sort_SwapBubble(data);
 
     printf("====快速排序：\n");
+    data = fixedData();
+    Sort_SwapQuick(data, 0, data.length - 1);
+    SortPrint(data);
+
+    printf("====快速排序 二路快排：\n");
     data = fixedData();
     Sort_SwapQuick(data, 0, data.length - 1);
     SortPrint(data);
@@ -182,9 +193,28 @@ void testRadixSort() {
 }
 
 
+void testHeap() {
+    vector<int> list = {3, 2, 6, 4, 5, 8, 10};
+    Heap heap(list);
+    heap.print();
+    int top = heap.top();
+    cout << top << endl;
+    heap.push(7);
+    heap.print();
+//    cout << "remove 5:" << endl;
+//    heap.remove(5);
+//    heap.print();
+
+    cout << "remove 8:" << endl;
+    heap.remove(8);
+    heap.print();
+}
+
+
 void testSort() {
 //    testInsertSort();
 //    testSwapSort();
-    testSelectionSort();
+//    testSelectionSort();
 //    testRadixSort();
+    testHeap();
 }

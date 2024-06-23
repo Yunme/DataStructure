@@ -80,5 +80,7 @@ add_executable(DataStructure main.cpp
         Sort/SelectionSort.h
         Sort/RadixSort.cpp
         Sort/RadixSort.h
+        Sort/Heap.h
+        Sort/Heap.cpp
 )
 
